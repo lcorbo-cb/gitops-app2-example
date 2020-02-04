@@ -4,42 +4,39 @@ library identifier: 'custom-lib@master', retriever: modernSCM(
    credentialsId: 'lcorbo-cb-key'])
 
 pipeline {
-  agent none
+  agent {
+    kubernetes {
+      yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    some-label: some-label-value
+spec:
+  containers:
+  - name: maven
+    image: maven:alpine
+    command:
+    - cat
+    tty: true
+  - name: busybox
+    image: busybox
+    command:
+    - cat
+    tty: true
+"""
+    }
+  }
   stages {
-    stage('Lint Dockerfile') {
+    stage('Run maven') {
       steps {
-        script {
-          containerdLint()
+        container('maven') {
+          sh 'mvn -version'
+        }
+        container('busybox') {
+          sh '/bin/busybox'
         }
       }
     }
-    stage('Build with Kaniko') {
-      steps {
-        script {
-          kanikoBuild('lcorbocb/hadolint:demo')
-        }
-      }
-    }
-    stage('Unit Tests') {
-      steps {
-        script {
-          containerdUnitTest('hadolint')
-        }
-      }
-    }
-  }/*
-  post {
-    failure {
-      // notify users when the Pipeline fails
-      mail to: 'lcorbo@cloudbees.com',
-          subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-          body: "Something is wrong with ${env.BUILD_URL}"
-    }
-    success {
-      // notify users when the Pipeline Succeeds
-      mail to: 'lcorbo@cloudbees.com',
-          subject: "Successful Pipeline: ${currentBuild.fullDisplayName}",
-          body: "${env.BUILD_URL} Completed"
-    }
-  }*/
+  }
 }
