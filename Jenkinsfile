@@ -38,6 +38,7 @@ spec:
         }
         script{
           commandtests()
+        }
       }
     }
   }
