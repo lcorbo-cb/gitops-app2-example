@@ -36,6 +36,8 @@ spec:
         container('busybox') {
           sh '/bin/busybox'
         }
+        script{
+          commandtests()
       }
     }
   }
