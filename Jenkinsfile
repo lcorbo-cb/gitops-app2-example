@@ -27,6 +27,9 @@ spec:
 """
     }
   }
+  triggers {
+    eventTrigger simpleMatch("helloWorld")
+  }
   stages {
     stage('Run maven') {
       steps {
