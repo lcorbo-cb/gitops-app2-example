@@ -28,7 +28,7 @@ spec:
     }
   }
   triggers {
-    eventTrigger simpleMatch("helloWorld")
+    eventTrigger jmespathQuery("eventName=='helloWorld'")
   }
   stages {
     stage('Run maven') {
