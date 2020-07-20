@@ -1,8 +1,3 @@
-library identifier: 'custom-lib@master', retriever: modernSCM(
-  [$class: 'GitSCMSource',
-   remote: 'https://github.com/lcorbo-cb/gitops-sharedliberary-example.git',
-   credentialsId: 'lcorbo-cb-key'])
-
 pipeline {
   agent {
     kubernetes {
@@ -27,9 +22,6 @@ spec:
 """
     }
   }
-  triggers {
-    eventTrigger jmespathQuery("eventName=='helloWorld'")
-  }
   stages {
     stage('Run maven') {
       steps {
@@ -38,9 +30,6 @@ spec:
         }
         container('busybox') {
           sh '/bin/busybox'
-        }
-        script{
-          commandtests()
         }
       }
     }
