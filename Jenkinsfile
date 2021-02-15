@@ -22,9 +22,13 @@ spec:
 """
     }
   }
+  triggers {
+    eventTrigger jmespathQuery("eventName=='newbuild'")
+  }
   stages {
     stage('Run maven') {
       steps {
+        echo "All causes of this build:" + currentBuild.getBuildCauses().toString()
         container('maven') {
           sh 'mvn -version'
           sh 'echo "I am running on an agent!"'
