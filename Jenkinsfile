@@ -23,16 +23,14 @@ spec:
     }
   }
   triggers {
-    eventTrigger jmespathQuery("eventName=='newbuild'" )
+    eventTrigger jmespathQuery("eventName=='newbuild'" ) // &&
   }
   stages {
     stage('Run maven') {
       steps {
         echo "buildtag:" + currentBuild.getBuildCauses()[0].event.buildTag.toString()
-        echo "source:" + currentBuild.getBuildCauses()[0].event.source.buildInfo.toString()
-      //  buildtag:{"eventName":"newbuild","buildTag":"corbolj2","source":{"type":"JenkinsBuild","buildInfo":{"build":12,"job":"sailpoint/master","jenkinsUrl":"https://cbci.cloudbees.demo/master01/","instanceId":"53edc47ec94fb8cb4a456a2a3802f5bb"}}}
-
-        // echo currentBuild.getBuildCauses()[0].event.toString()
+        echo "jenkinsUrl:" + currentBuild.getBuildCauses()[0].event.source.buildInfo.jenkinsUrl.toString()
+        echo "job:" + currentBuild.getBuildCauses()[0].event.source.buildInfo.job.toString()
         container('maven') {
           sh 'mvn -version'
           sh 'echo "I am running on an agent!"'
