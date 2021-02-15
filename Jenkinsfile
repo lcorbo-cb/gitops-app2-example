@@ -28,10 +28,8 @@ spec:
   stages {
     stage('Run maven') {
       steps {
-        echo "All causes of this build:" + currentBuild.getBuildCauses().toString()
-        echo currentBuild.getBuildCauses()[0].event.toString()
-        echo currentBuild.getBuildCauses()[0].event.event.toString()
-        echo currentBuild.getBuildCauses()[0]._class.toString()
+        echo "buildtag:" + currentBuild.getBuildCauses()[0].event.toString()
+        // echo currentBuild.getBuildCauses()[0].event.toString()
         container('maven') {
           sh 'mvn -version'
           sh 'echo "I am running on an agent!"'
