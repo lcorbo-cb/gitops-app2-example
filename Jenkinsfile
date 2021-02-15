@@ -23,8 +23,9 @@ spec:
     }
   }
   triggers {
-    eventTrigger jmespathQuery("eventName=='newbuild'" ) // &&
+    eventTrigger jmespathQuery("eventName=='newbuild' && source.buildInfo.jenkinsUrl=='https://cbci.cloudbees.demo/master01/'" ) // &&
   }
+  
   stages {
     stage('Run maven') {
       steps {
