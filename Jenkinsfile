@@ -23,7 +23,7 @@ spec:
     }
   }
   triggers {
-    eventTrigger jmespathQuery("eventName=='newbuild'" || )
+    eventTrigger jmespathQuery("eventName=='newbuild'" )
   }
   stages {
     stage('Run maven') {
