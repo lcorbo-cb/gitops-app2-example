@@ -22,9 +22,9 @@ spec:
 """
     }
   }
-//  triggers {
-//    eventTrigger jmespathQuery("eventName=='newbuild' && source.buildInfo.jenkinsUrl=='https://cbci.cloudbees.demo/master01/'" ) // &&
-//  }
+  triggers {
+    eventTrigger jmespathQuery("eventName=='newbuild' && source.buildInfo.jenkinsUrl=='https://cbci.cloudbees.demo/master01/'" ) // &&
+  }
   
   stages {
     stage('Run maven') {
